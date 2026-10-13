@@ -1,0 +1,55 @@
+{
+  "organization": "Wide World Importers",
+  "dynamics365CustomerService": {
+    "businessTerms": [
+      {
+        "termName": "Platinum Cold-Chain SLA",
+        "synonyms": ["VIP Cold Chain", "Tier-1 Perishable SLA"],
+        "description": "High-priority cold-chain shipping SLA requiring response within 15 minutes and container temperature below 4 degrees Celsius.",
+        "dataverseMapping": {
+          "table": "incident",
+          "filterExpression": "prioritycode eq 1 and _customerid_value/wwi_slatier eq 'Platinum-ColdChain'"
+        }
+      },
+      {
+        "termName": "Priority Customs Hold",
+        "synonyms": ["Port Hold Alert", "Customs Detention"],
+        "description": "Service cases where refrigerated cargo is detained at customs inspection for more than 6 hours.",
+        "dataverseMapping": {
+          "table": "incident",
+          "filterExpression": "wwi_customsholdstatus eq 100000002"
+        }
+      }
+    ],
+    "customCaseSummaryFields": [
+      { "logicalName": "title", "displayName": "Case Title" },
+      { "logicalName": "prioritycode", "displayName": "Priority" },
+      { "logicalName": "wwi_containertemperaturec", "displayName": "Container Temperature (C)" },
+      { "logicalName": "wwi_customsbrokerreference", "displayName": "Customs Broker Reference" },
+      { "logicalName": "description", "displayName": "Customer Issue Description" }
+    ]
+  },
+  "copilotForSalesExtension": {
+    "agentName": "Microsoft 365 Copilot for Sales",
+    "connectorAction": {
+      "connectorId": "wwi_FreightAndCreditBureauConnector",
+      "operationId": "GetAccountCreditAndFreightQuote",
+      "authenticationMode": "OAuth2EntraIdOBO",
+      "descriptionForOrchestrator": "Retrieves real-time credit limit, overdue invoice balance, and refrigerated freight quote for a Dynamics 365 Sales Account ID when preparing meeting briefs or drafting customer quote emails."
+    }
+  },
+  "contactCenterChannelIntegration": {
+    "workstreamName": "WWI Voice and Live Chat Workstream",
+    "voiceSettings": {
+      "enableBargeIn": true,
+      "enableDtmfFallback": true,
+      "silenceTimeoutMs": 1500
+    },
+    "handoffContextVariables": [
+      { "name": "va_CustomerAccountId", "type": "Text", "passToUnifiedRouting": true },
+      { "name": "va_DetectedIntent", "type": "Text", "passToUnifiedRouting": true },
+      { "name": "va_SentimentTier", "type": "Text", "passToUnifiedRouting": true },
+      { "name": "va_ConversationSummary", "type": "Text", "displayToHumanRepresentative": true }
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+name: AB-100 Agentic AI Solution CI/CD Pipeline (Copilot Studio + Power Platform + Foundry)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-validate-solution:
+    name: 1. Pack Managed Solution, Run Solution Checker & Foundry AI Evaluators
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Pack Unpacked Source into Managed Solution Artifact
+        uses: microsoft/powerplatform-actions/pack-solution@v1
+        with:
+          solution-folder: ./src/solutions/FabrikamAgenticCustomerOperations
+          solution-file: ./out/FabrikamAgenticCustomerOperations_managed.zip
+          solution-type: Managed
+
+      - name: Run Power Platform Solution Checker Gate
+        uses: microsoft/powerplatform-actions/check-solution@v1
+        with:
+          environment-url: ${{ secrets.DEV_ENVIRONMENT_URL }}
+          app-id: ${{ secrets.ENTRA_APP_CLIENT_ID }}
+          client-secret: ${{ secrets.ENTRA_APP_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.ENTRA_TENANT_ID }}
+          solution-file: ./out/FabrikamAgenticCustomerOperations_managed.zip
+
+      - name: Run Microsoft Foundry Quality & AI Red Teaming Evaluation Gate
+        run: |
+          python3 labs/Lab-08-Foundry-Agent-Evaluation-Red-Teaming-and-Guardrails/solution/agent_evaluation_suite.py
+
+      - name: Upload Verified Managed Solution Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: managed-solution-package
+          path: ./out/FabrikamAgenticCustomerOperations_managed.zip
+
+  deploy-to-uat:
+    name: 2. Import Managed Solution to UAT & Run Copilot Studio Kit Tests
+    needs: build-and-validate-solution
+    runs-on: ubuntu-latest
+    environment: uat
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Verified Managed Solution Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: managed-solution-package
+          path: ./out
+
+      - name: Import Managed Solution into UAT with deployment-settings.json
+        uses: microsoft/powerplatform-actions/import-solution@v1
+        with:
+          environment-url: ${{ secrets.UAT_ENVIRONMENT_URL }}
+          app-id: ${{ secrets.ENTRA_APP_CLIENT_ID }}
+          client-secret: ${{ secrets.ENTRA_APP_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.ENTRA_TENANT_ID }}
+          solution-file: ./out/FabrikamAgenticCustomerOperations_managed.zip
+          deployment-settings-file: ./labs/Lab-10-Power-Platform-Managed-Solutions-and-Agentic-ALM-Pipelines/solution/deployment-settings.json
+          activate-plugins: true
+          force-overwrite: true
+
+  deploy-to-production:
+    name: 3. Promote Verified Managed Solution to Production (Requires Approval Gate)
+    needs: deploy-to-uat
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Verified Managed Solution Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: managed-solution-package
+          path: ./out
+
+      - name: Import Managed Solution as Upgrade into Production
+        uses: microsoft/powerplatform-actions/import-solution@v1
+        with:
+          environment-url: ${{ secrets.PROD_ENVIRONMENT_URL }}
+          app-id: ${{ secrets.ENTRA_APP_CLIENT_ID }}
+          client-secret: ${{ secrets.ENTRA_APP_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.ENTRA_TENANT_ID }}
+          solution-file: ./out/FabrikamAgenticCustomerOperations_managed.zip
+          deployment-settings-file: ./config/prod-deployment-settings.json
+          stage-and-upgrade: true
+          activate-plugins: true

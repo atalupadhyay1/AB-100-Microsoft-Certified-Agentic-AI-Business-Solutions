@@ -1,0 +1,50 @@
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnEventActivity
+  id: autonomousOrderHoldTrigger
+  eventName: Dataverse.RowAdded.salesorder
+  condition: =System.Activity.Value.aw_ordertotal > 10000 && System.Activity.Value.aw_shippinghold == true
+  actions:
+    - kind: SetVariable
+      id: captureOrderPayload
+      variable: Topic.OrderPayload
+      value: =System.Activity.Value
+
+    - kind: InvokeFlowAction
+      id: runDeterministicCreditAndInventoryFlow
+      flowId: aw_VerifyInventoryAndCreditAgentFlow
+      input:
+        SalesOrderId: =Topic.OrderPayload.salesorderid
+        AccountId: =Topic.OrderPayload.customerid
+        OrderTotalUsd: =Topic.OrderPayload.aw_ordertotal
+      output:
+        CreditStatus: Topic.CreditStatus
+        InventoryAvailable: Topic.InventoryAvailable
+        RiskScore: Topic.RiskScore
+
+    - kind: ConditionGroup
+      id: evaluateTieredAutonomyThreshold
+      conditions:
+        - id: autoReleaseEligible
+          condition: =Topic.CreditStatus == "Approved" && Topic.InventoryAvailable == true && Topic.OrderPayload.aw_ordertotal <= 25000
+          actions:
+            - kind: InvokeFlowAction
+              id: autoReleaseOrderHold
+              flowId: aw_ReleaseSalesOrderHoldFlow
+              input:
+                SalesOrderId: =Topic.OrderPayload.salesorderid
+                ResolutionMode: "AutonomousRelease"
+                AuditNote: "Released autonomously by Copilot Studio Order Triage Agent (Order <= $25,000, Credit Approved, Stock Verified)."
+
+        - id: humanInTheLoopApprovalRequired
+          condition: =Topic.OrderPayload.aw_ordertotal > 25000 || Topic.CreditStatus != "Approved" || Topic.InventoryAvailable == false
+          actions:
+            - kind: InvokeFlowAction
+              id: postToAgentFeedAndTeamsApproval
+              flowId: aw_PostExceptionToAgentFeedAndTeamsHitlFlow
+              input:
+                SalesOrderId: =Topic.OrderPayload.salesorderid
+                OrderTotalUsd: =Topic.OrderPayload.aw_ordertotal
+                CreditStatus: =Topic.CreditStatus
+                InventoryAvailable: =Topic.InventoryAvailable
+                RecommendedAction: "Supervisor review required: Order exceeds $25,000 autonomous limit or has credit/inventory flags."

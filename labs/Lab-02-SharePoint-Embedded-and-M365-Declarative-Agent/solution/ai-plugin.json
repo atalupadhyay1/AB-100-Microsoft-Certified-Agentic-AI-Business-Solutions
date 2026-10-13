@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.2/schema.json",
+  "schema_version": "v2.2",
+  "name_for_human": "Tailspin Dynamics 365 Service Cases",
+  "description_for_human": "Query open Dynamics 365 Customer Service cases and propose next best actions.",
+  "description_for_model": "Use this plugin whenever the user asks to retrieve, filter, or summarize open customer service cases from Microsoft Dataverse / Dynamics 365 Customer Service, or when the user asks to record a proposed next action on a specific case ID.",
+  "functions": [
+    {
+      "name": "getOpenServiceCases",
+      "description": "Retrieves open customer service cases from Microsoft Dataverse filtered by priority and account name, honoring the signed-in user's On-Behalf-Of (OBO) security permissions."
+    },
+    {
+      "name": "proposeCaseNextAction",
+      "description": "Writes a proposed next-best-action recommendation and resolution note onto an existing service case in Microsoft Dataverse. Requires explicit user confirmation.",
+      "capabilities": {
+        "confirmation": {
+          "type": "AdaptiveCard",
+          "title": "Confirm Case Update in Dynamics 365",
+          "body": "Are you sure you want to record this proposed next action on the Dynamics 365 Customer Service case?"
+        }
+      }
+    }
+  ],
+  "runtimes": [
+    {
+      "type": "OpenApi",
+      "auth": {
+        "type": "OAuthPluginVault",
+        "reference_id": "entra_obo_dataverse_auth_ref"
+      },
+      "spec": {
+        "url": "openapi-service-cases.yaml"
+      },
+      "run_for_functions": [
+        "getOpenServiceCases",
+        "proposeCaseNextAction"
+      ]
+    }
+  ]
+}

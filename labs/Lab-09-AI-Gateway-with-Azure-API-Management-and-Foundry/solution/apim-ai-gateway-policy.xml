@@ -1,0 +1,65 @@
+<!--
+  AB-100 Lab 09 Solution: Azure API Management (APIM) AI Gateway Policy for Microsoft Foundry & MCP
+  Enforces:
+  1. Microsoft Entra ID / Entra Agent ID JWT Validation (Zero-Trust Inbound Auth)
+  2. Managed Identity Authentication to Microsoft Foundry (Zero Static API Keys)
+  3. Per-Subscription Token Rate-Limiting (TPM & Tokens/Hour Quotas)
+  4. Application Insights Token Telemetry Emission (Departmental Chargeback)
+  5. Semantic Caching Lookup & Store
+  6. Priority Backend Pool Routing (PTU Primary -> PayGo Secondary Failover)
+-->
+<policies>
+    <inbound>
+        <base />
+        <!-- 1. Validate Caller's Microsoft Entra ID / Entra Agent ID Token -->
+        <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Unauthorized: Valid Microsoft Entra Agent ID or User OBO token required.">
+            <openid-config url="https://login.microsoftonline.com/{{EntraTenantId}}/v2.0/.well-known/openid-configuration" />
+            <audiences>
+                <audience>api://humongous-insurance-ai-gateway</audience>
+            </audiences>
+        </validate-jwt>
+
+        <!-- 2. Enforce Per-Department Token-Per-Minute (TPM) & Hourly Token Quotas -->
+        <azure-openai-token-limit
+            counter-key="@(context.Subscription.Id)"
+            tokens-per-minute="15000"
+            tokens-per-hour="500000"
+            estimate-prompt-tokens="true"
+            remaining-tokens-header-name="x-ratelimit-remaining-tokens"
+            tokens-consumed-header-name="x-tokens-consumed" />
+
+        <!-- 3. Emit Granular Token Consumption Metrics to Application Insights for Chargeback -->
+        <azure-openai-emit-token-metric namespace="HumongousInsuranceAIGateway">
+            <dimension name="SubscriptionId" value="@(context.Subscription.Id)" />
+            <dimension name="AgentIdentityObjectId" value="@(context.Request.Headers.GetValueOrDefault("Authorization","").AsJwt()?.Subject ?? "unknown")" />
+            <dimension name="ClientIP" value="@(context.Request.IpAddress)" />
+        </azure-openai-emit-token-metric>
+
+        <!-- 4. Semantic Cache Lookup (Returns cached answer if cosine similarity >= 0.95) -->
+        <azure-openai-semantic-cache-lookup
+            score-threshold="0.95"
+            embeddings-backend-id="foundry-embeddings-backend"
+            embeddings-backend-auth="system-assigned" />
+
+        <!-- 5. Authenticate to Microsoft Foundry using APIM Managed Identity & Route to Load-Balanced Pool -->
+        <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
+        <set-backend-service backend-id="foundry-ptu-paygo-priority-pool" />
+    </inbound>
+
+    <backend>
+        <!-- Retry automatically on secondary PayGo backend if Primary PTU returns HTTP 429 or 503 -->
+        <retry condition="@(context.Response.StatusCode == 429 || context.Response.StatusCode == 503)" count="2" interval="1" first-fast-retry="true">
+            <forward-request buffer-request-body="true" />
+        </retry>
+    </backend>
+
+    <outbound>
+        <base />
+        <!-- 6. Store Completion in Semantic Cache for 300 Seconds -->
+        <azure-openai-semantic-cache-store duration="300" />
+    </outbound>
+
+    <on-error>
+        <base />
+    </on-error>
+</policies>

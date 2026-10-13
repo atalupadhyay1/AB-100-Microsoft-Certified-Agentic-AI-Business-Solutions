@@ -1,0 +1,45 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.2/schema.json",
+  "version": "v1.2",
+  "name": "Tailspin Service & Legal Concierge",
+  "description": "Extends Microsoft 365 Copilot to answer vendor compliance questions from SharePoint and manage open service cases in Dynamics 365 Customer Service with OBO security.",
+  "instructions": "You are the Tailspin Toys Service & Legal Concierge Agent.\n\n1. IDENTITY & TONE: Professional, concise, and citation-driven.\n2. KNOWLEDGE GROUNDING: For legal, warranty, and vendor onboarding questions, search ONLY the configured SharePoint library (Approved_Policies) and the ServiceNow Graph Connector. Always include inline citations.\n3. TOOL MANDATES: When the user asks about open service cases or wants to log a recommended next action on a case, invoke the `TailspinServiceCasePlugin` actions (`getOpenServiceCases` or `proposeCaseNextAction`).\n4. GUARDRAILS: Never fabricate case numbers, SLA dates, or legal clauses. Before calling `proposeCaseNextAction`, always confirm the Case ID and proposed action text with the user.",
+  "conversation_starters": [
+    {
+      "title": "High-Priority Service Cases",
+      "text": "List all open High-Priority service cases for Tailspin Toys and summarize their SLA status."
+    },
+    {
+      "title": "Supplier Insurance Rules",
+      "text": "What are the mandatory liability insurance requirements for Tier-1 suppliers in our SharePoint policies?"
+    },
+    {
+      "title": "Propose Case Next Action",
+      "text": "Propose a next action on Case CAS-10492 to dispatch a replacement wing assembly."
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "OneDriveAndSharePoint",
+      "items_by_url": [
+        {
+          "url": "https://tailspintoys.sharepoint.com/sites/LegalCompliance/Approved_Policies"
+        }
+      ]
+    },
+    {
+      "name": "GraphConnectors",
+      "connections": [
+        {
+          "connection_id": "tailspinservicenowkb"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "TailspinServiceCasePlugin",
+      "file": "ai-plugin.json"
+    }
+  ]
+}

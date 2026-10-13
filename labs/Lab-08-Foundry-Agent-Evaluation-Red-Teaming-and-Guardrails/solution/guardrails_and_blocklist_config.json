@@ -1,0 +1,62 @@
+{
+  "guardrailPolicyName": "woodgrove-strict-banking-guardrail",
+  "version": "2026-04-01",
+  "targetDeployments": [
+    "gpt-4o-woodgrove-prod",
+    "model-router-woodgrove-prod"
+  ],
+  "inputFilters": {
+    "contentHarmCategories": {
+      "Hate": { "enabled": true, "severityThreshold": "Low", "action": "Block" },
+      "Violence": { "enabled": true, "severityThreshold": "Low", "action": "Block" },
+      "Sexual": { "enabled": true, "severityThreshold": "Low", "action": "Block" },
+      "SelfHarm": { "enabled": true, "severityThreshold": "Low", "action": "Block" }
+    },
+    "promptShields": {
+      "userPromptInjectionJailbreak": {
+        "enabled": true,
+        "action": "Block"
+      },
+      "indirectDocumentAttackXPIA": {
+        "enabled": true,
+        "spotlightingDelimitersEnabled": true,
+        "action": "Block"
+      }
+    }
+  },
+  "outputFilters": {
+    "contentHarmCategories": {
+      "Hate": { "enabled": true, "severityThreshold": "Low", "action": "Block" },
+      "Violence": { "enabled": true, "severityThreshold": "Low", "action": "Block" },
+      "Sexual": { "enabled": true, "severityThreshold": "Low", "action": "Block" },
+      "SelfHarm": { "enabled": true, "severityThreshold": "Low", "action": "Block" }
+    },
+    "groundednessDetection": {
+      "enabled": true,
+      "domain": "Generic",
+      "ungroundedAction": "BlockAndRewriteWithFallback"
+    },
+    "protectedMaterialDetection": {
+      "text": { "enabled": true, "action": "Block" },
+      "code": { "enabled": true, "action": "AnnotateAndBlock" }
+    }
+  },
+  "customBlocklists": [
+    {
+      "blocklistName": "woodgrove-competitors-and-investment-blocklist",
+      "applyToInput": true,
+      "applyToOutput": true,
+      "action": "Block",
+      "exactTerms": [
+        "ContosoBank",
+        "FabrikamCredit",
+        "guaranteed stock return",
+        "risk-free crypto"
+      ],
+      "regexPatterns": [
+        "(?i)guaranteed\\s+\\d+%\\s+return",
+        "(?i)buy\\s+ticker\\s+[A-Z]{3,5}\\s+immediately"
+      ]
+    }
+  ]
+}

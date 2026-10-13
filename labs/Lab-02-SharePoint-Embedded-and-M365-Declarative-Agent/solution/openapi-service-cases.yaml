@@ -1,0 +1,83 @@
+openapi: 3.0.3
+info:
+  title: Tailspin Toys Dynamics 365 Customer Service Case API
+  description: OpenAPI specification for querying and updating Dynamics 365 Customer Service cases via On-Behalf-Of (OBO) user authentication.
+  version: 1.0.0
+servers:
+  - url: https://api.tailspintoys.com/d365-service/v1
+paths:
+  /cases:
+    get:
+      operationId: getOpenServiceCases
+      summary: Retrieve open customer service cases filtered by priority or customer account
+      description: Queries Microsoft Dataverse incident records that are currently active, respecting the calling user's field-level and row-level security roles.
+      parameters:
+        - name: priority
+          in: query
+          required: false
+          description: Filter cases by priority tier (High, Normal, Low).
+          schema:
+            type: string
+            enum: [High, Normal, Low]
+        - name: accountName
+          in: query
+          required: false
+          description: Filter cases by the customer account display name.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A list of matching open service cases.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cases:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        caseNumber:
+                          type: string
+                          example: "CAS-10492"
+                        title:
+                          type: string
+                          example: "Damaged carbon-fiber rotor blade in shipment"
+                        priority:
+                          type: string
+                          example: "High"
+                        slaStatus:
+                          type: string
+                          example: "At Risk - 3 hours remaining"
+  /cases/{caseNumber}/next-action:
+    post:
+      operationId: proposeCaseNextAction
+      summary: Propose and log a next action on a specific service case
+      description: Updates the proposed next action field on an active Dynamics 365 Customer Service case after user confirmation.
+      parameters:
+        - name: caseNumber
+          in: path
+          required: true
+          description: The unique case identifier (for example, CAS-10492).
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - proposedAction
+                - rationale
+              properties:
+                proposedAction:
+                  type: string
+                  description: The concrete next action recommended for the support engineer.
+                rationale:
+                  type: string
+                  description: Brief explanation grounded in warranty policy.
+      responses:
+        "200":
+          description: Case successfully updated with the proposed next action.

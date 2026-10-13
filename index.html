@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AB-100: Agentic AI Business Solutions Architect — Interactive Course & Lab Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="landing/styles.css" />
+</head>
+<body>
+
+  <!-- Sticky Top Navigation -->
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="#top" class="brand">
+        <span class="brand-badge">AB-100</span>
+        <span>Agentic AI Solutions Architect</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#mental-models">Mental Models</a></li>
+        <li><a href="#curriculum">11 Modules</a></li>
+        <li><a href="#hands-on-labs">11 Labs &amp; Solutions</a></li>
+        <li><a href="#roi-simulator">ROI &amp; Router Calc</a></li>
+        <li><a href="#exam-prep">Interactive Quiz &amp; Mock Exam</a></li>
+        <li><a href="#roadmap">4-Week Roadmap</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="progress-pill" title="Your study progress saved locally in browser">
+          <span class="progress-pill-dot"></span>
+          <span id="globalProgressText" class="tabular-nums">0 / 22 Completed</span>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="openMarkdownDrawer('COURSE-SYLLABUS-AND-EXAM-GUIDE.md')">
+          Exam Blueprint
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="openMarkdownDrawer('quizzes-and-exams/Full-Length-AB-100-Mock-Exam-With-Solutions.md')">
+          60-Q Mock Exam
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Left Column -->
+        <div>
+          <div class="eyebrow-badge">
+            <span>EXAM AB-100 &bull; COURSE AB-100T00-A &bull; OCTOBER 2026 STUDY GUIDE</span>
+          </div>
+          <h1 class="hero-title">
+            Microsoft Certified: <span>Agentic AI Business Solutions Architect</span>
+          </h1>
+          <p class="hero-subtitle">
+            A complete, humanized Beginner-to-Architect curriculum covering all <strong>11 Official Course Modules (118 Units)</strong>, <strong>11 Step-by-Step Hands-On Labs with Runnable Solutions</strong>, and <strong>130+ Exam Scenarios &amp; Case Studies</strong> across Microsoft Copilot Studio, Microsoft Foundry, Power Platform, Dynamics 365, and Microsoft Purview.
+          </p>
+
+          <div class="hero-pillars">
+            <div class="hero-pillar-item">
+              <div class="hero-pillar-label">Beginner Friendly</div>
+              <div class="hero-pillar-text">Plain-English analogies, ASCII visual models &amp; A–Z glossary</div>
+            </div>
+            <div class="hero-pillar-item">
+              <div class="hero-pillar-label">Architect Grade</div>
+              <div class="hero-pillar-text">MCP, A2A, Computer Use, APIM Gateway, ALM &amp; Entra Agent ID</div>
+            </div>
+            <div class="hero-pillar-item">
+              <div class="hero-pillar-label">Solutions Included</div>
+              <div class="hero-pillar-text">All 11 Lab code solutions &amp; 100% of quiz/exam rationales in place</div>
+            </div>
+          </div>
+
+          <div class="hero-cta-row">
+            <a href="#curriculum" class="btn btn-primary">Explore 11 Course Modules &rarr;</a>
+            <a href="#hands-on-labs" class="btn btn-secondary">Inspect 11 Lab Solutions</a>
+            <button class="btn btn-ghost" onclick="openMarkdownDrawer('GLOSSARY-AND-MENTAL-MODELS.md')">
+              Open Mental Models Primer
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: Official Exam Blueprint Card -->
+        <aside class="blueprint-card">
+          <div class="blueprint-header">
+            <div>
+              <div class="blueprint-title">Exam AB-100 Official Blueprint</div>
+              <div class="blueprint-subtitle">Expert-Level Architecture Certification</div>
+            </div>
+            <span class="exam-status-badge">OCT 2026 SYNCED</span>
+          </div>
+
+          <div class="blueprint-kpi-grid">
+            <div class="kpi-box">
+              <div class="kpi-value">700/1000</div>
+              <div class="kpi-label">Passing Score</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-value">11 / 118</div>
+              <div class="kpi-label">Modules / Units</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-value">11 Labs</div>
+              <div class="kpi-label">+23 Solution Files</div>
+            </div>
+          </div>
+
+          <div class="domain-bar-wrap">
+            <div class="domain-bar-header">
+              <span>Official Exam Domain Weighting</span>
+              <span class="tabular-nums">100% Coverage</span>
+            </div>
+            <div class="domain-segmented-bar">
+              <div class="seg-d1" title="Domain 1: Plan AI-Powered Business Solutions (25–30%)"></div>
+              <div class="seg-d2" title="Domain 2: Design AI-Powered Business Solutions (25–30%)"></div>
+              <div class="seg-d3" title="Domain 3: Deploy AI-Powered Business Solutions (40–45%)"></div>
+            </div>
+            <div class="domain-legend-list">
+              <div class="domain-legend-item">
+                <div class="legend-left">
+                  <span class="legend-dot" style="background: var(--d1-color);"></span>
+                  <span>Domain 1: Plan AI Business Solutions (Mods 01–04)</span>
+                </div>
+                <span class="legend-weight" style="color: var(--d1-color);">25–30%</span>
+              </div>
+              <div class="domain-legend-item">
+                <div class="legend-left">
+                  <span class="legend-dot" style="background: var(--d2-color);"></span>
+                  <span>Domain 2: Design AI Business Solutions (Mods 05–07)</span>
+                </div>
+                <span class="legend-weight" style="color: var(--d2-color);">25–30%</span>
+              </div>
+              <div class="domain-legend-item">
+                <div class="legend-left">
+                  <span class="legend-dot" style="background: var(--d3-color);"></span>
+                  <span>Domain 3: Deploy, Test, ALM &amp; Security (Mods 08–11)</span>
+                </div>
+                <span class="legend-weight" style="color: var(--d3-color);">40–45%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="prereq-checker">
+            <label for="prereqSelect" class="prereq-label">
+              Interactive Prerequisite Checker (1 of 14 Associate Certs Required):
+            </label>
+            <select id="prereqSelect" class="prereq-select" onchange="checkPrerequisiteCert(this.value)">
+              <option value="">Select your current Microsoft Associate Certification...</option>
+              <option value="AI-102 (Azure AI Engineer Associate)">AI-102: Azure AI Engineer Associate</option>
+              <option value="PL-200 (Power Platform Functional Consultant)">PL-200: Power Platform Functional Consultant Associate</option>
+              <option value="PL-400 (Power Platform Developer)">PL-400: Power Platform Developer Associate</option>
+              <option value="DP-100 (Azure Data Scientist)">DP-100: Azure Data Scientist Associate</option>
+              <option value="DP-600 / DP-700 (Fabric Analytics / Data Engineer)">DP-600 / DP-700: Fabric Analytics / Data Engineer Associate</option>
+              <option value="MS-700 / MS-721 (Teams / Collaboration Admin)">MS-700 / MS-721: Teams / Collaboration Engineer Associate</option>
+              <option value="MB-210 / MB-230 / MB-240 / MB-280 (D365 CRM)">MB-210 / MB-230 / MB-240 / MB-280: Dynamics 365 Customer Experience</option>
+              <option value="MB-310 / MB-330 / MB-335 / MB-500 (D365 F&O)">MB-310 / MB-330 / MB-335 / MB-500: Dynamics 365 Finance &amp; Supply Chain</option>
+              <option value="MB-800 / MB-820 (Business Central)">MB-800 / MB-820: Dynamics 365 Business Central</option>
+              <option value="none">I don't hold an Associate certification yet</option>
+            </select>
+            <div id="prereqStatusBox" class="prereq-status"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Interactive Mental Models & 2026 Rename Reference -->
+  <section id="mental-models" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">STEP 0 &bull; INTUITION BUILDERS</div>
+          <h2 class="section-title">Core Architect Mental Models &amp; 2026 Terminology</h2>
+          <p class="section-desc">
+            Before diving into the 11 modules, build rock-solid intuition for how Microsoft's agentic architecture works and how legacy product names map to the October 2026 exam.
+          </p>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="openMarkdownDrawer('GLOSSARY-AND-MENTAL-MODELS.md')">
+          Read Full Glossary &amp; Mental Models &rarr;
+        </button>
+      </div>
+
+      <div class="mental-models-box">
+        <div class="mm-tabs">
+          <button class="mm-tab active" onclick="switchMentalModelTab('mm-spectrum', this)">
+            1. The 5-Stage Agent Spectrum
+          </button>
+          <button class="mm-tab" onclick="switchMentalModelTab('mm-rag-ft', this)">
+            2. Grounding (RAG) vs. Fine-Tuning
+          </button>
+          <button class="mm-tab" onclick="switchMentalModelTab('mm-mcp-a2a', this)">
+            3. MCP (Tools) vs. A2A (Agents)
+          </button>
+          <button class="mm-tab" onclick="switchMentalModelTab('mm-renames', this)">
+            4. Official 2026 Product Rename Table
+          </button>
+        </div>
+
+        <div class="mm-content">
+          <!-- Tab 1: 5-Stage Spectrum -->
+          <div id="mm-spectrum" class="mm-panel active">
+            <p style="color: var(--text-secondary); font-size: 0.94rem;">
+              Think of AI progression as five ascending rungs on an enterprise autonomy ladder—always choose the <strong>simplest rung</strong> that satisfies the business requirement:
+            </p>
+            <div class="spectrum-grid">
+              <div class="spectrum-step">
+                <div class="spectrum-level">STAGE 1</div>
+                <div class="spectrum-name">Rule-Based Bot</div>
+                <div class="spectrum-analogy">Train on fixed tracks: follows strict if/then decision trees.</div>
+                <div class="spectrum-tech">Classic Topics / Power Automate</div>
+              </div>
+              <div class="spectrum-step">
+                <div class="spectrum-level">STAGE 2</div>
+                <div class="spectrum-name">Retrieval Assistant</div>
+                <div class="spectrum-analogy">Research librarian: searches grounded files &amp; summarizes with citations.</div>
+                <div class="spectrum-tech">M365 Copilot / SharePoint Agent</div>
+              </div>
+              <div class="spectrum-step">
+                <div class="spectrum-level">STAGE 3</div>
+                <div class="spectrum-name">Task Agent</div>
+                <div class="spectrum-analogy">Concierge with keys: calls APIs, connectors &amp; MCP tools on demand.</div>
+                <div class="spectrum-tech">Copilot Studio + Agent Flows</div>
+              </div>
+              <div class="spectrum-step">
+                <div class="spectrum-level">STAGE 4</div>
+                <div class="spectrum-name">Autonomous Agent</div>
+                <div class="spectrum-analogy">Night-shift manager: wakes up on events, plans multi-step loops &amp; escalates exceptions.</div>
+                <div class="spectrum-tech">Event Triggers + Reasoning Mode</div>
+              </div>
+              <div class="spectrum-step">
+                <div class="spectrum-level">STAGE 5</div>
+                <div class="spectrum-name">Multi-Agent System</div>
+                <div class="spectrum-analogy">Hospital specialist team: Orchestrator delegates across specialized agents via A2A.</div>
+                <div class="spectrum-tech">Copilot Studio + Microsoft Foundry</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: RAG vs Fine-Tuning -->
+          <div id="mm-rag-ft" class="mm-panel">
+            <div class="arch-table-wrap">
+              <table class="arch-table">
+                <thead>
+                  <tr>
+                    <th>Architectural Dimension</th>
+                    <th>Grounding / RAG (SharePoint, Dataverse, Azure AI Search)</th>
+                    <th>Fine-Tuning / Custom Model (Microsoft Foundry)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Human Analogy</strong></td>
+                    <td>Giving the model an <strong>up-to-date open-book reference library</strong> at runtime.</td>
+                    <td>Sending the model to <strong>specialized trade school</strong> to learn a new style, jargon, or compact output format.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Freshness</strong></td>
+                    <td><strong>Real-time / Near-real-time</strong> (instant updates when documents or CRM rows change).</td>
+                    <td><strong>Static snapshot</strong> as of training date (requires retraining when facts change).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Security &amp; ACL Trimming</strong></td>
+                    <td><strong>Enforces per-user ACLs</strong> via On-Behalf-Of (OBO) authentication &amp; search filters.</td>
+                    <td><strong>No per-user row security</strong>—anything baked into model weights can be surfaced to any caller!</td>
+                  </tr>
+                  <tr>
+                    <td><strong>When to Choose on AB-100</strong></td>
+                    <td>Enterprise policies, product catalogs, live CRM/ERP records, citations required.</td>
+                    <td>Distilling a domain task into a fast, low-cost <strong>Small Language Model (SLM)</strong> or strict proprietary syntax.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab 3: MCP vs A2A -->
+          <div id="mm-mcp-a2a" class="mm-panel">
+            <div class="arch-table-wrap">
+              <table class="arch-table">
+                <thead>
+                  <tr>
+                    <th>Protocol</th>
+                    <th>Direction</th>
+                    <th>Analogy &amp; How It Works</th>
+                    <th>AB-100 Exam Trigger Phrase</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Model Context Protocol (MCP)</strong></td>
+                    <td><strong>Vertical (Agent &rarr; Tool / Resource)</strong></td>
+                    <td>Universal <strong>USB-C port for AI tools</strong>. Expose tools/resources once on an MCP server (`x-ms-agentic-protocol: mcp-streamable-1.0`); Copilot Studio &amp; Foundry dynamically discover new tools at runtime.</td>
+                    <td><em>"Share standardized tools across multiple agents with automatic runtime schema discovery."</em></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Agent2Agent (A2A) Protocol</strong></td>
+                    <td><strong>Horizontal (Agent &harr; Peer Agent)</strong></td>
+                    <td>Peer collaboration protocol. Agents publish an <strong>Agent Card</strong> describing capabilities and delegate conversational tasks across Copilot Studio, Microsoft Foundry, and third-party clouds.</td>
+                    <td><em>"Delegate a sub-task from an Orchestrator Agent in Copilot Studio to a Specialist Agent in Microsoft Foundry."</em></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab 4: 2026 Rename Table -->
+          <div id="mm-renames" class="mm-panel">
+            <div class="arch-table-wrap">
+              <table class="arch-table">
+                <thead>
+                  <tr>
+                    <th>Legacy / Previous Name</th>
+                    <th>Official October 2026 AB-100 Exam Term</th>
+                    <th>Architectural Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Azure AI Studio / Azure AI Foundry</td>
+                    <td><strong>Microsoft Foundry</strong> (<code>ai.azure.com</code>)</td>
+                    <td>Pro-code platform for Model Catalog (1,800+ models), Foundry Agent Service, Evaluators, Red Teaming &amp; Guardrails.</td>
+                  </tr>
+                  <tr>
+                    <td>Azure AI Services / Cognitive Services</td>
+                    <td><strong>Microsoft Foundry Tools</strong></td>
+                    <td>Document Intelligence, Azure AI Speech, Language (CLU/PII), Vision, Translator &amp; Content Safety.</td>
+                  </tr>
+                  <tr>
+                    <td>Power Virtual Agents (PVA)</td>
+                    <td><strong>Microsoft Copilot Studio</strong></td>
+                    <td>Low-code studio for building, orchestrating, testing, and publishing custom &amp; autonomous agents.</td>
+                  </tr>
+                  <tr>
+                    <td>Power Automate Flows called by Agents</td>
+                    <td><strong>Agent Flows</strong></td>
+                    <td>Deterministic multi-step workflows with AI actions executed by Copilot Studio agents.</td>
+                  </tr>
+                  <tr>
+                    <td>Service Principal for Autonomous Agents</td>
+                    <td><strong>Microsoft Entra Agent ID</strong></td>
+                    <td>First-class identity in Microsoft Entra for autonomous agents with human sponsors, RBAC &amp; Conditional Access.</td>
+                  </tr>
+                  <tr>
+                    <td>UI / Screen RPA for API-less Legacy Apps</td>
+                    <td><strong>Computer Use (CUA) in Copilot Studio</strong></td>
+                    <td>Vision-reasoning agent capability that visually clicks and types on desktop/web UIs when no API exists.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: 11 Official Course Modules Explorer -->
+  <section id="curriculum" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">STEP 1 &bull; OFFICIAL 11-MODULE CURRICULUM (118 UNITS)</div>
+          <h2 class="section-title">Complete Course Study Guides (Beginner to Advanced)</h2>
+          <p class="section-desc">
+            Every module preserves the exact Microsoft Learn `AB-100T00-A` structure with Beginner analogies, Intermediate portal configurations, Advanced Architect Decision Matrices, and 5 Exam Scenarios with solutions.
+          </p>
+        </div>
+      </div>
+
+      <div class="filter-controls">
+        <div id="moduleFilterTabs" class="filter-tabs">
+          <button class="filter-tab active" data-domain="all">All 11 Modules</button>
+          <button class="filter-tab" data-domain="d1">Domain 1: Plan (Mods 01–04)</button>
+          <button class="filter-tab" data-domain="d2">Domain 2: Design (Mods 05–07)</button>
+          <button class="filter-tab" data-domain="d3">Domain 3: Deploy (Mods 08–11)</button>
+        </div>
+        <div class="search-input-wrap">
+          <input
+            type="search"
+            id="moduleSearchInput"
+            class="search-input"
+            placeholder="Filter modules by topic (e.g., MCP, Model Router, Business Terms, ALM, Purview, XPIA)..."
+          />
+        </div>
+      </div>
+
+      <div id="modulesGrid" class="modules-grid"></div>
+    </div>
+  </section>
+
+  <!-- Section 3: 11 Hands-On Labs & Live Solution Code Workbench -->
+  <section id="hands-on-labs" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">STEP 2 &bull; HANDS-ON ARCHITECTURE LABS</div>
+          <h2 class="section-title">11 Complete Step-by-Step Labs &amp; Solution Code Workbench</h2>
+          <p class="section-desc">
+            Select any lab below to read the step-by-step exercises and inspect its complete, verified <code>solution/</code> artifacts (Python simulators, Copilot Studio <code>.mcs.yml</code> YAML, Declarative Agent JSON, OpenAPI specs, APIM XML policies, Bicep &amp; GitHub Actions).
+          </p>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="openMarkdownDrawer('labs/README.md')">
+          Open Master Lab Setup Guide &rarr;
+        </button>
+      </div>
+
+      <div class="labs-workbench">
+        <!-- Left List of 11 Labs -->
+        <div class="labs-list-panel">
+          <div class="labs-list-header">
+            <span>HANDS-ON LAB CATALOG</span>
+            <span class="tabular-nums">11 Labs &bull; 23 Files</span>
+          </div>
+          <div id="labsScrollList" class="labs-scroll-list"></div>
+        </div>
+
+        <!-- Right Code & Instructions Inspector -->
+        <div class="lab-detail-panel">
+          <div class="lab-detail-header">
+            <div>
+              <div id="activeLabBadge" class="section-eyebrow" style="margin-bottom:4px;">LAB 01</div>
+              <h3 id="activeLabTitle" style="font-size:1.18rem;font-weight:800;">Loading Lab...</h3>
+            </div>
+          </div>
+
+          <div id="labFileTabs" class="lab-file-tabs"></div>
+          <div id="labAssetViewport" class="lab-readme-viewport md-content"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Interactive ROI, TCO & Foundry Model Router Simulator -->
+  <section id="roi-simulator" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">INTERACTIVE ARCHITECT TOOL &bull; DOMAIN 1.3 &amp; LAB 01</div>
+          <h2 class="section-title">Live TCO, ROI &amp; Microsoft Foundry Model Router Simulator</h2>
+          <p class="section-desc">
+            Test the exact financial formulas and <strong>Model Router</strong> token economics evaluated in <strong>Module 04</strong> and <strong>Lab 01</strong>. Drag the sliders to model how routing simple prompts to an SLM (`Phi-4` / `GPT-4o-mini`) transforms enterprise ROI and payback period.
+          </p>
+        </div>
+      </div>
+
+      <div class="calc-grid">
+        <div class="calc-controls-card">
+          <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:18px;">Workload &amp; Financial Parameters</h3>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Monthly Agent Prompts</span>
+              <span id="valPrompts" class="slider-val">2,000,000</span>
+            </div>
+            <input
+              type="range"
+              id="sliderPrompts"
+              class="range-slider"
+              min="100000"
+              max="10000000"
+              step="100000"
+              value="2000000"
+              oninput="updateRoiCalculator()"
+            />
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Model Router Split (% Simple Routed to SLM)</span>
+              <span id="valSlmRatio" class="slider-val">75% SLM / 25% Frontier</span>
+            </div>
+            <input
+              type="range"
+              id="sliderSlmRatio"
+              class="range-slider"
+              min="0"
+              max="95"
+              step="5"
+              value="75"
+              oninput="updateRoiCalculator()"
+            />
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Upfront Implementation Cost (CapEx)</span>
+              <span id="valCapex" class="slider-val">$125,000</span>
+            </div>
+            <input
+              type="range"
+              id="sliderCapex"
+              class="range-slider"
+              min="25000"
+              max="500000"
+              step="5000"
+              value="125000"
+              oninput="updateRoiCalculator()"
+            />
+          </div>
+
+          <div class="slider-group" style="margin-bottom:0;">
+            <div class="slider-header">
+              <span>Quantified Monthly Business Benefit (Labor + Deflection)</span>
+              <span id="valMonthlyBenefit" class="slider-val">$52,000/mo</span>
+            </div>
+            <input
+              type="range"
+              id="sliderMonthlyBenefit"
+              class="range-slider"
+              min="15000"
+              max="150000"
+              step="1000"
+              value="52000"
+              oninput="updateRoiCalculator()"
+            />
+          </div>
+        </div>
+
+        <div class="calc-results-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-family:var(--font-mono);font-size:0.75rem;color:#60A5FA;font-weight:700;">
+              LIVE ARCHITECT BUSINESS CASE OUTPUT
+            </span>
+            <span style="font-family:var(--font-mono);font-size:0.73rem;color:#94A3B8;">
+              Formula: ROI = ((Benefit - TCO) / TCO) &times; 100
+            </span>
+          </div>
+
+          <div class="calc-kpi-grid">
+            <div class="calc-kpi-box">
+              <div class="calc-kpi-label">Unrouted Token Cost (100% Frontier)</div>
+              <div id="resUnroutedCost" class="calc-kpi-num">$20,000/mo</div>
+            </div>
+            <div class="calc-kpi-box">
+              <div class="calc-kpi-label">Model Router Token Cost</div>
+              <div id="resRoutedCost" class="calc-kpi-num highlight-blue">$5,788/mo</div>
+            </div>
+            <div class="calc-kpi-box">
+              <div class="calc-kpi-label">Monthly Model Router Savings</div>
+              <div id="resRouterSavings" class="calc-kpi-num highlight-green">$14,213/mo (71.1%)</div>
+            </div>
+            <div class="calc-kpi-box">
+              <div class="calc-kpi-label">Year-1 Total Cost of Ownership (TCO)</div>
+              <div id="resYear1Tco" class="calc-kpi-num">$296,450</div>
+            </div>
+            <div class="calc-kpi-box">
+              <div class="calc-kpi-label">Year-1 Return on Investment (ROI %)</div>
+              <div id="resYear1Roi" class="calc-kpi-num highlight-green">+110.5%</div>
+            </div>
+            <div class="calc-kpi-box">
+              <div class="calc-kpi-label">CapEx Payback Period</div>
+              <div id="resPayback" class="calc-kpi-num highlight-blue">3.3 Months</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Interactive Exam Prep & Full Assessment Suite -->
+  <section id="exam-prep" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">STEP 3 &bull; EXAM SIMULATION &amp; SOLUTIONS</div>
+          <h2 class="section-title">Interactive AB-100 Exam Simulator &amp; Complete Question Banks</h2>
+          <p class="section-desc">
+            Test your decision-making on high-yield AB-100 scenarios right here with instant rationales, or open the full 55-Question Module Quiz Bank, Domain Case Studies, and 60-Question Mock Exam below.
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Links to All 5 Full Assessment Documents -->
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;">
+        <button class="btn btn-primary btn-sm" onclick="openMarkdownDrawer('quizzes-and-exams/Full-Length-AB-100-Mock-Exam-With-Solutions.md')">
+          Open Full 60-Question Mock Exam + 3 Case Studies
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="openMarkdownDrawer('quizzes-and-exams/Module-Quizzes-01-to-11-With-Solutions.md')">
+          Open 55 Module Quiz Questions (Mods 01–11)
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="openMarkdownDrawer('quizzes-and-exams/Domain-1-Plan-Practice-Quiz-and-Scenarios.md')">
+          Domain 1 (Plan) Scenarios + Woodgrove Case Study
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="openMarkdownDrawer('quizzes-and-exams/Domain-2-Design-Practice-Quiz-and-Scenarios.md')">
+          Domain 2 (Design) Scenarios + Adventure Works Case Study
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="openMarkdownDrawer('quizzes-and-exams/Domain-3-Deploy-Practice-Quiz-and-Scenarios.md')">
+          Domain 3 (Deploy) Scenarios + Lamna Healthcare Case Study
+        </button>
+      </div>
+
+      <!-- Interactive Live Quiz Card -->
+      <div class="quiz-simulator-card">
+        <div class="quiz-top-bar">
+          <div id="quizFilterTabs" class="filter-tabs">
+            <button class="filter-tab active" onclick="setQuizDomainFilter('all', this)">All Domains</button>
+            <button class="filter-tab" onclick="setQuizDomainFilter('d1', this)">Domain 1: Plan</button>
+            <button class="filter-tab" onclick="setQuizDomainFilter('d2', this)">Domain 2: Design</button>
+            <button class="filter-tab" onclick="setQuizDomainFilter('d3', this)">Domain 3: Deploy</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span id="quizProgressLabel" class="unit-count-badge">Question 1 of 8</span>
+            <span id="quizScoreBadge" class="exam-status-badge tabular-nums">Live Score: 0/0 (Target: 700/1000)</span>
+          </div>
+        </div>
+
+        <div id="quizQuestionText" class="quiz-question-text"></div>
+        <div id="quizOptionsList" class="quiz-options-list"></div>
+        <div id="quizRationaleBox" class="quiz-rationale-box"></div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:0.8rem;color:var(--text-muted);">
+            Select an option (A–D) to verify your answer and reveal the Architect Rationale.
+          </span>
+          <button class="btn btn-primary btn-sm" onclick="nextQuizQuestion()">
+            Next Scenario Question &rarr;
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: 4-Week Study Roadmap -->
+  <section id="roadmap" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">STEP 4 &bull; STRUCTURED STUDY PLAN</div>
+          <h2 class="section-title">4-Week Beginner-to-Architect Certification Roadmap</h2>
+          <p class="section-desc">
+            Follow this structured 4-week schedule to progress systematically from foundational mental models to passing the full 60-question mock exam at &ge;83%.
+          </p>
+        </div>
+      </div>
+
+      <div class="roadmap-grid">
+        <div class="roadmap-card">
+          <div class="roadmap-week">WEEK 1 &bull; DOMAIN 1 (25–30%)</div>
+          <div class="roadmap-title">Plan Strategy, Grounding &amp; ROI</div>
+          <ul class="roadmap-list">
+            <li>&check; Read <strong>Syllabus</strong> &amp; <strong>Mental Models Primer</strong></li>
+            <li>&check; Study <strong>Modules 01, 02, 03 &amp; 04</strong></li>
+            <li>&check; Run <strong>Lab 01</strong> (Grounding &amp; ROI Python tools) &amp; <strong>Lab 02</strong> (Declarative Agent)</li>
+            <li>&check; Pass <strong>Domain 1 Practice Quiz &amp; Woodgrove Case Study</strong></li>
+          </ul>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-week">WEEK 2 &bull; DOMAIN 2 (25–30%)</div>
+          <div class="roadmap-title">Design Agents, MCP, A2A &amp; D365</div>
+          <ul class="roadmap-list">
+            <li>&check; Study <strong>Modules 05, 06 &amp; 07</strong></li>
+            <li>&check; Complete <strong>Lab 03</strong> (Fallback &amp; Agent Flows) &amp; <strong>Lab 04</strong> (Dataverse + AI Builder)</li>
+            <li>&check; Run <strong>Lab 05</strong> (MCP Server), <strong>Lab 06</strong> (Foundry + A2A) &amp; <strong>Lab 07</strong> (D365)</li>
+            <li>&check; Pass <strong>Domain 2 Practice Quiz &amp; Adventure Works Case Study</strong></li>
+          </ul>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-week">WEEK 3 &bull; DOMAIN 3 (40–45%)</div>
+          <div class="roadmap-title">Deploy, Monitor, Test, ALM &amp; Security</div>
+          <ul class="roadmap-list">
+            <li>&check; Study <strong>Modules 08, 09, 10 &amp; 11</strong> (Highest exam weight!)</li>
+            <li>&check; Run <strong>Lab 08</strong> (Foundry Evaluators &amp; Red Teaming)</li>
+            <li>&check; Inspect <strong>Lab 09</strong> (APIM AI Gateway), <strong>Lab 10</strong> (ALM) &amp; <strong>Lab 11</strong> (Purview/XPIA)</li>
+            <li>&check; Pass <strong>Domain 3 Practice Quiz &amp; Lamna Healthcare Case Study</strong></li>
+          </ul>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-week">WEEK 4 &bull; FINAL EXAM READINESS</div>
+          <div class="roadmap-title">Full Mock Exam &amp; Portal Review</div>
+          <ul class="roadmap-list">
+            <li>&check; Complete all <strong>55 Module Knowledge Check Questions</strong></li>
+            <li>&check; Review the <strong>2026 Terminology Rename Table</strong> &amp; <strong>8 Admin Portals</strong></li>
+            <li>&check; Sit the <strong>Full-Length 60-Question AB-100 Mock Exam</strong> (100 mins, aim for 50/60+)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong style="color:#F8FAFC;">AB-100: Microsoft Certified: Agentic AI Business Solutions Architect</strong>
+        <div>Complete Study Curriculum, 11 Modules, 11 Hands-On Labs with Solutions &amp; 60-Question Mock Exam</div>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <button class="btn btn-secondary btn-sm" onclick="openMarkdownDrawer('README.md')">Repository README</button>
+        <button class="btn btn-primary btn-sm" onclick="openMarkdownDrawer('COURSE-SYLLABUS-AND-EXAM-GUIDE.md')">Official Syllabus</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-Over Document & Study Guide Reader Drawer -->
+  <div id="drawerBackdrop" class="drawer-backdrop" onclick="closeDrawer()"></div>
+  <aside id="docDrawer" class="doc-drawer" aria-label="Course Study Guide Reader">
+    <div class="drawer-header">
+      <div>
+        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">
+          LIVE REPOSITORY STUDY READER
+        </div>
+        <div id="drawerPath" class="drawer-path">modules/Module-01...</div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="closeDrawer()">Close Reader (Esc) &times;</button>
+    </div>
+    <div id="drawerBody" class="drawer-body"></div>
+  </aside>
+
+  <script src="landing/app.js"></script>
+</body>
+</html>
