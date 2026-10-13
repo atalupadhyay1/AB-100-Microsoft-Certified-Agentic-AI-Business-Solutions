@@ -1,0 +1,30 @@
+kind: AgentDefinition
+schemaVersion: 2026-04-01
+metadata:
+  name: Adventure Works Order & Support Concierge
+  description: Hybrid Task and Autonomous Agent for Adventure Works Cycles handling customer support, order status, custom fallback escalation, and autonomous high-value order hold triage.
+settings:
+  orchestration:
+    mode: Generative
+    allowDynamicChaining: true
+    useReasoningModelForComplexPlans: true
+  contentModeration: High
+  authentication:
+    mode: IntegratedEntraIdOBO
+    requireSignIn: true
+  telemetry:
+    applicationInsightsConnectionStringEnvVar: aw_AppInsightsConnectionString
+    logActivities: true
+    logCustomTelemetryEvents: true
+knowledgeSources:
+  - kind: SharePointKnowledgeSource
+    name: AdventureWorksWarrantyPolicies
+    siteUrlEnvVar: aw_WarrantySharePointSiteUrl
+    description: Official Adventure Works Cycles bicycle warranty manuals, return window policies, and dealer SLA documents.
+  - kind: DataverseKnowledgeSource
+    name: AdventureWorksSalesOrders
+    tables:
+      - salesorder
+      - account
+      - incident
+    description: Authoritative Microsoft Dataverse tables for customer orders, dealer accounts, and open service incidents.

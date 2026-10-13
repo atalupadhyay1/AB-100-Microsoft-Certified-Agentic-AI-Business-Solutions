@@ -1,0 +1,62 @@
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnUnknownIntent
+  id: main
+  actions:
+    - kind: SetVariable
+      id: incrementFallbackCounter
+      variable: Global.FallbackCount
+      value: =Coalesce(Global.FallbackCount, 0) + 1
+
+    - kind: LogCustomTelemetryEvent
+      id: logUnmatchedQueryToAppInsights
+      eventName: UnrecognizedUserQuery
+      properties:
+        UnmatchedText: =System.Activity.Text
+        RetryAttempt: =Global.FallbackCount
+        ChannelId: =System.Activity.ChannelId
+        ConversationId: =System.Conversation.Id
+
+    - kind: ConditionGroup
+      id: checkFallbackThreshold
+      conditions:
+        - id: firstUnrecognizedAttempt
+          condition: =Global.FallbackCount < 2
+          actions:
+            - kind: Question
+              id: askUserToRephraseOrSelectCategory
+              interruptionPolicy:
+                allowInterruption: true
+              prompt:
+                text: >-
+                  I want to make sure I get you the right information, but I did not find a match for "{System.Activity.Text}".
+                  Could you rephrase your question with an order number or bike model, or select one of these common topics?
+                suggestedActions:
+                  - Track Wholesale Order
+                  - Submit Frame Warranty Claim
+                  - Speak to a Specialist
+              variable: Topic.RephrasedChoice
+              entity: StringPrebuiltEntity
+
+            - kind: SendActivity
+              id: retriggerSearchWithRephrasedInput
+              activity: Let me check on "{Topic.RephrasedChoice}" for you right away.
+
+      elseActions:
+        - kind: SetVariable
+          id: resetFallbackCounterBeforeEscalation
+          variable: Global.FallbackCount
+          value: =0
+
+        - kind: SendActivity
+          id: notifyCustomerOfHumanTransfer
+          activity: >-
+            I am still unable to resolve your request automatically. I am transferring you now to a live Adventure Works
+            Customer Service representative along with a full summary of our conversation so you do not have to repeat yourself.
+
+        - kind: BeginDialog
+          id: redirectToEscalateSystemTopic
+          dialog: cr_adventureworks.topic.Escalate
+          input:
+            EscalationReason: "Fallback threshold reached (2 consecutive unmatched utterances)"
+            LastUserQuery: =System.Activity.Text

@@ -1,0 +1,32 @@
+kind: AgentExtensionDefinition
+schemaVersion: 2026-04-01
+targetAgent: CopilotForFinanceAndOperationsApps
+environmentLinkage:
+  fnoEnvironmentUrlEnvVar: wwi_FnOEnvironmentUrl
+  dataverseEnvironmentUrlEnvVar: wwi_DataverseEnvironmentUrl
+  enableVirtualTables: true
+  enableDualWrite: true
+inAppHelpKnowledgeSources:
+  - kind: SharePointKnowledgeSource
+    id: wwi_WarehouseAndFinanceSOPs
+    siteUrlEnvVar: wwi_SopSharePointSiteUrl
+    authentication: OnBehalfOfUserEntraID
+    includeInConversationalBoosting: true
+    description: >-
+      Official Wide World Importers custom standard operating procedures (SOPs) for Dynamics 365 Finance
+      vendor invoice journals, customs duty postings, and Dynamics 365 Supply Chain Management cold-chain receiving.
+  - kind: MicrosoftLearnDefaultKnowledge
+    id: mslearn_FnO_OfficialDocs
+    enabled: true
+crossAppInteroperabilityKnowledge:
+  - kind: DataverseKnowledgeSource
+    id: wwi_CrmServiceCasesAndAccounts
+    tables:
+      - incident
+      - account
+      - salesorder
+      - msdyn_customerasset
+    authentication: OnBehalfOfUserEntraID
+    description: >-
+      Allows Dynamics 365 Finance and Supply Chain Management in-app agent chat to query open CRM service cases,
+      cold-chain temperature incidents, and customer account holds stored in Microsoft Dataverse.

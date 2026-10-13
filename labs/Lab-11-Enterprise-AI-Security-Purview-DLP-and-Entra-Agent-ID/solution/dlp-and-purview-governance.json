@@ -1,0 +1,57 @@
+{
+  "organization": "Lamna Healthcare Company",
+  "microsoftEntraAgentIdGovernance": {
+    "agentIdentityName": "agent-lamna-claims-triage-prod",
+    "identityType": "MicrosoftEntraAgentID",
+    "humanSponsor": "evelyn.carter@lamnahealthcare.com",
+    "credentialMechanism": "ManagedIdentityWorkloadFederation (ZeroStaticSecrets)",
+    "disableLocalAuthOnFoundry": true,
+    "scopedRbacRoles": [
+      "Cognitive Services OpenAI User",
+      "Dataverse: Lamna Claims Triage Reader/Writer"
+    ]
+  },
+  "powerPlatformDlpPolicy": {
+    "policyName": "Lamna-Strict-Agentic-DLP",
+    "environments": ["Lamna-UAT", "Lamna-Production"],
+    "defaultConnectorClassification": "Blocked",
+    "businessGroupConnectors": [
+      "shared_commondataserviceforapps",
+      "shared_sharepointonline",
+      "shared_webcontents",
+      "lamna_EnterpriseMcpServer"
+    ],
+    "connectorEndpointFiltering": {
+      "connectorId": "shared_webcontents",
+      "rules": [
+        { "order": 1, "behavior": "Allow", "endpointPattern": "https://mcp.lamnahealthcare.com/*" },
+        { "order": 2, "behavior": "Allow", "endpointPattern": "https://api.lamnahealthcare.com/*" },
+        { "order": 3, "behavior": "Deny", "endpointPattern": "*" }
+      ]
+    },
+    "copilotStudioChannelGovernance": {
+      "allowMicrosoftTeamsWithEntraSSO": true,
+      "allowAnonymousPublicWebChat": false
+    }
+  },
+  "microsoftPurviewGovernance": {
+    "dspmForAi": {
+      "capturePromptsAndResponses": true,
+      "detectShadowAi": true,
+      "sharePointOversharingRemediation": true
+    },
+    "dlpForCopilotAndAgents": {
+      "blockedSensitivityLabels": [
+        "Highly Confidential - Restricted Board / Unmasked PHI"
+      ],
+      "enforceSensitivityLabelInheritance": true
+    },
+    "dataResidencyAndAudit": {
+      "foundryDeploymentType": "DataZoneStandard_US",
+      "crossGeoGenerativeAiMovementAllowed": false,
+      "publicBingWebSearchGroundingAllowed": false,
+      "dataverseColumnLevelAuditingEnabled": true,
+      "purviewAuditRetentionDays": 365
+    }
+  }
+}

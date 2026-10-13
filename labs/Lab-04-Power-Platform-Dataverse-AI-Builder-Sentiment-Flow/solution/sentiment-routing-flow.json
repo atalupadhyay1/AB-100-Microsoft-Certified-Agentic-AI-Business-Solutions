@@ -1,0 +1,106 @@
+{
+  "name": "BFYO-AI-Builder-Sentiment-Analysis-and-Routing-Flow",
+  "description": "Classifies new Dataverse Customer Reviews using AI Builder Sentiment Analysis with confidence scores and routes Negative reviews via email.",
+  "connectionReferences": {
+    "shared_commondataserviceforapps": {
+      "connectionName": "bfyo_DataverseConnectionRef",
+      "id": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    "shared_office365": {
+      "connectionName": "bfyo_OutlookConnectionRef",
+      "id": "/providers/Microsoft.PowerApps/apis/shared_office365"
+    }
+  },
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "triggers": {
+      "When_a_new_Customer_Review_row_is_added": {
+        "type": "OpenApiConnectionWebhook",
+        "inputs": {
+          "host": {
+            "connectionName": "shared_commondataserviceforapps",
+            "operationId": "SubscribeWebhookTrigger"
+          },
+          "parameters": {
+            "subscriptionRequest/message": 1,
+            "subscriptionRequest/entityname": "bfyo_customerreview",
+            "subscriptionRequest/scope": 4
+          }
+        }
+      }
+    },
+    "actions": {
+      "Analyze_positive_or_negative_sentiment_in_text": {
+        "runAfter": {},
+        "type": "OpenApiConnection",
+        "inputs": {
+          "host": {
+            "connectionName": "shared_commondataserviceforapps",
+            "operationId": "aibuilderpredict_sentiment"
+          },
+          "parameters": {
+            "recordId": "prebuilt-sentiment-analysis-v3",
+            "item/language": "en",
+            "item/text": "@triggerOutputs()?['body/bfyo_reviewtext']"
+          }
+        }
+      },
+      "Update_Dataverse_Customer_Review_Row": {
+        "runAfter": {
+          "Analyze_positive_or_negative_sentiment_in_text": ["Succeeded"]
+        },
+        "type": "OpenApiConnection",
+        "inputs": {
+          "host": {
+            "connectionName": "shared_commondataserviceforapps",
+            "operationId": "UpdateRecord"
+          },
+          "parameters": {
+            "entityName": "bfyo_customerreviews",
+            "recordId": "@triggerOutputs()?['body/bfyo_customerreviewid']",
+            "item/bfyo_sentimentclassification": "@outputs('Analyze_positive_or_negative_sentiment_in_text')?['body/responsev2/predictionOutput/result/sentiment']",
+            "item/bfyo_confidencescore": "@outputs('Analyze_positive_or_negative_sentiment_in_text')?['body/responsev2/predictionOutput/result/sentimentScores/negative']"
+          }
+        }
+      },
+      "Condition_Check_High_Confidence_Negative_Sentiment": {
+        "runAfter": {
+          "Update_Dataverse_Customer_Review_Row": ["Succeeded"]
+        },
+        "type": "If",
+        "expression": {
+          "and": [
+            {
+              "equals": [
+                "@outputs('Analyze_positive_or_negative_sentiment_in_text')?['body/responsev2/predictionOutput/result/sentiment']",
+                "negative"
+              ]
+            },
+            {
+              "greaterOrEquals": [
+                "@outputs('Analyze_positive_or_negative_sentiment_in_text')?['body/responsev2/predictionOutput/result/sentimentScores/negative']",
+                0.75
+              ]
+            }
+          ]
+        },
+        "actions": {
+          "Send_Urgent_QA_Alert_Email": {
+            "type": "OpenApiConnection",
+            "inputs": {
+              "host": {
+                "connectionName": "shared_office365",
+                "operationId": "SendEmailV2"
+              },
+              "parameters": {
+                "emailMessage/To": "qa-alerts@bestforyouorganics.com",
+                "emailMessage/Subject": "URGENT QA ALERT: High-Confidence Negative Review on SKU @{triggerOutputs()?['body/bfyo_productsku']}",
+                "emailMessage/Body": "<p><strong>Customer:</strong> @{triggerOutputs()?['body/bfyo_customername']}</p><p><strong>Negative Confidence Score:</strong> @{outputs('Analyze_positive_or_negative_sentiment_in_text')?['body/responsev2/predictionOutput/result/sentimentScores/negative']}</p><p><strong>Review Text:</strong> @{triggerOutputs()?['body/bfyo_reviewtext']}</p>"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

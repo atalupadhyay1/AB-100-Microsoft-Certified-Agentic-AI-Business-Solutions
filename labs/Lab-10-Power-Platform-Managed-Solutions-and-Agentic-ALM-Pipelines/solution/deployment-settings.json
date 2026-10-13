@@ -1,0 +1,33 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "fab_SharePointPolicySiteUrl",
+      "Value": "https://fabrikam.sharepoint.com/sites/ProdCustomerPolicies"
+    },
+    {
+      "SchemaName": "fab_FoundryModelEndpoint",
+      "Value": "https://apim-fabrikam-prod-gateway.azure-api.net/openai"
+    },
+    {
+      "SchemaName": "fab_AppInsightsConnectionString",
+      "Value": "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://eastus2-0.in.applicationinsights.azure.com/"
+    }
+  ],
+  "ConnectionReferences": [
+    {
+      "LogicalName": "fab_DataverseConnRef",
+      "ConnectionId": "a1b2c3d4e5f600001111222233334444",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+    },
+    {
+      "LogicalName": "fab_ServiceNowConnRef",
+      "ConnectionId": "f6e5d4c3b2a199998888777766665555",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_service-now"
+    },
+    {
+      "LogicalName": "fab_OutlookConnRef",
+      "ConnectionId": "11223344556677889900aabbccddeeff",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+    }
+  ]
+}
